@@ -1,93 +1,64 @@
-body{
-	background:#666;
+.btn-primary{
+	background:#313461;
+	border-color:#313461;
+}
+
+.jumbotron{
+	background: #333 url('../img/bg.jpg') -400px -200px;
+	color: #fff;
+	text-align: center;
+	border-bottom: 5px #f4f4f4 solid;
+}
+
+.jumbotron-main{
+	padding: 0 60px 40px 60px;
+
+}
+
+.jumbotron-main h1{
+	margin-top: 60px; 
+	margin-bottom: 30px;
+}
+
+.jumbotron p.lead{
+	font-size: 25px;
+	margin-bottom: 60px;
+}
+
+.jumbotron-sub{
+
+}
+
+.navbar{
+	margin:0;
 	color:#fff;
-	font-family:arial;
-	line-height:1.5em; 
 }
 
-a{
+.navbar a{
 	color:#fff;
-	text-decoration: none;
-
 }
 
-ul{
-
-	padding:0;
+.navbar a:hover{
+	background:none !important;
+	border-bottom: #fff 3ps solid;
 }
 
-.clr{
-	clear:both;
+.box{
+	text-align: center;
 }
 
-#container{
-	background: #333;
-	width: 960px;
-	margin:30px auto;
-	overflow:hidden;
-	padding:10px;
-
-}
-
-#nav{
-	height:40px;
-	background: #666;
-
-}
-
-$nav ul{
-
-	padding-top:13px;
-	padding-left:10px;
-}
-
-#nav li{
-	list-style:none;
-	float:left;
-	padding-right: 20px
-}
-
-#nav .active{
-	font-weight:bold;
-	color:#000;
+.section-a{
+	background:#313461;
+	color:#fff;
+	text-align: center;
+	padding:50px;
+	margin-bottom: 30px;
 }
 
 
-#main{
-
-	float:left;
-	width:60%;
+.section-a h1{
+	font-size:50px;
 }
 
-#sidebar{
 
-	float:right;
-	width:30%;
-	background: #666;
-	margin-top: 20px;
-	padding: 10px;
-}
-
-#footer{
-	text-align:center;
-	padding:10px;
-	background:#666;
-	margin-top: 30px;
-}
-
-.services li{
-	border-bottom:2px #666 dashed;
-	padding-bottom:20px;
-}
-
-.services a{
-	background:#666;
-	padding:10px;
-}
-
-input, textarea{
-	width:100%;
-	padding:5px;
-	margin-bottom:15px;
-}
 
