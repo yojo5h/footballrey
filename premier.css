@@ -1,6 +1,13 @@
+/* Black and purple theme for the Premier League page. */
+
+body{
+	background:black;
+	color:#f5f3ff;
+}
+
 .btn-primary{
-	background:#313461;
-	border-color:#313461;
+	background:#7c3aed;
+	border-color:#7c3aed;
 }
 
 div {
@@ -12,13 +19,6 @@ div {
 }
 
 .center{
-	border: 5px solid #FFFF00;
+	border: 5px solid #7c3aed;
 	padding: 50px 0;
 }
-
-
-
-
-
-
-
