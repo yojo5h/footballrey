@@ -1,22 +1,25 @@
-/* Premier League results + upcoming fixtures, rendered under the standings table.
+/* Results + upcoming fixtures for one league, rendered under a standings table.
+   Configure with data-league and data-season on #fx-fixtures.
    Data: API-Sports /fixtures (one request for the whole season, cached 10 minutes). */
 (function () {
-  var LEAGUE = 39;
-  var SEASON = 2026;
+  var root = document.getElementById('fx-fixtures');
+  if (!root) return;
+  var LEAGUE = root.getAttribute('data-league');
+  var SEASON = root.getAttribute('data-season');
   var KEY = '26c4d56c5c9b4795471cbca950c0e469';
-  var CACHE_KEY = 'pl-fixtures-' + SEASON;
+  var CACHE_KEY = 'fx-fixtures-' + LEAGUE + '-' + SEASON;
   var CACHE_MS = 10 * 60 * 1000;
   var PAGE_SIZE = 30;
 
   var FINISHED = { FT: 1, AET: 1, PEN: 1 };
+  // Matches that will not be played (or were decided off the pitch) belong with the results, not the upcoming list.
+  var DONE = { FT: 1, AET: 1, PEN: 1, ABD: 1, CANC: 1, AWD: 1, WO: 1 };
   var LIVE = { '1H': 1, HT: 1, '2H': 1, ET: 1, BT: 1, P: 1, LIVE: 1, INT: 1 };
 
-  var root = document.getElementById('pl-fixtures');
-  if (!root) return;
-  var statusEl = document.getElementById('pl-fixtures-status');
-  var listEl = document.getElementById('pl-fixtures-list');
-  var moreBtn = document.getElementById('pl-fixtures-more');
-  var tabButtons = root.querySelectorAll('.pl-tab');
+  var statusEl = document.getElementById('fx-fixtures-status');
+  var listEl = document.getElementById('fx-fixtures-list');
+  var moreBtn = document.getElementById('fx-fixtures-more');
+  var tabButtons = root.querySelectorAll('.fx-tab');
 
   var fixtures = [];
   var tab = 'upcoming';
@@ -56,9 +59,9 @@
   }
 
   function team(t, side) {
-    var span = el('span', 'pl-team pl-' + side);
-    var name = el('span', 'pl-team-name', t.name);
-    var img = el('img', 'pl-logo');
+    var span = el('span', 'fx-team fx-' + side);
+    var name = el('span', 'fx-team-name', t.name);
+    var img = el('img', 'fx-logo');
     img.src = t.logo;
     img.alt = '';
     img.loading = 'lazy';
@@ -70,19 +73,20 @@
   function row(f) {
     var short = f.fixture.status.short;
     var when = new Date(f.fixture.date);
-    var li = el('li', 'pl-match');
+    var li = el('li', 'fx-match');
 
     var state;
     if (FINISHED[short]) state = 'FT';
+    else if (DONE[short]) state = short;
     else if (LIVE[short]) state = short === 'HT' ? 'HT' : (f.fixture.status.elapsed || '') + "'";
     else if (short === 'NS' || short === 'TBD') state = when.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
     else state = short; // PST, CANC, SUSP, ABD...
-    li.appendChild(el('span', 'pl-state' + (LIVE[short] ? ' pl-live' : ''), state));
+    li.appendChild(el('span', 'fx-state' + (LIVE[short] ? ' fx-live' : ''), state));
 
     li.appendChild(team(f.teams.home, 'home'));
 
-    var score = el('span', 'pl-score');
-    if (FINISHED[short] || LIVE[short]) score.textContent = f.goals.home + ' - ' + f.goals.away;
+    var score = el('span', 'fx-score');
+    if ((FINISHED[short] || LIVE[short]) && f.goals.home !== null && f.goals.away !== null) score.textContent = f.goals.home + ' - ' + f.goals.away;
     else score.textContent = 'vs';
     li.appendChild(score);
 
@@ -93,10 +97,10 @@
   function visible() {
     var list;
     if (tab === 'results') {
-      list = fixtures.filter(function (f) { return FINISHED[f.fixture.status.short]; });
+      list = fixtures.filter(function (f) { return DONE[f.fixture.status.short]; });
       list.sort(function (a, b) { return b.fixture.timestamp - a.fixture.timestamp; });
     } else {
-      list = fixtures.filter(function (f) { return !FINISHED[f.fixture.status.short]; });
+      list = fixtures.filter(function (f) { return !DONE[f.fixture.status.short]; });
       list.sort(function (a, b) { return a.fixture.timestamp - b.fixture.timestamp; });
     }
     return list;
@@ -119,8 +123,8 @@
       var d = new Date(f.fixture.date);
       var k = dayKey(d);
       if (k !== lastDay) {
-        listEl.appendChild(el('h3', 'pl-date', d.toLocaleDateString([], dateFmt)));
-        ul = el('ul', 'pl-day');
+        listEl.appendChild(el('h3', 'fx-date', d.toLocaleDateString([], dateFmt)));
+        ul = el('ul', 'fx-day');
         listEl.appendChild(ul);
         lastDay = k;
       }
@@ -134,7 +138,7 @@
     shown = PAGE_SIZE;
     tabButtons.forEach(function (b) {
       var on = b.getAttribute('data-tab') === name;
-      b.classList.toggle('pl-active', on);
+      b.classList.toggle('fx-active', on);
       b.setAttribute('aria-selected', on ? 'true' : 'false');
     });
     render();
