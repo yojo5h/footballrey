@@ -1,0 +1,118 @@
+/* Results and fixtures under the table (fixtures.js).
+   Uses section/ul/li/span so the global `div` padding rule in premier.css does not apply. */
+#fx-fixtures{
+	max-width:535px;
+	margin:24px auto 48px;
+	background:#1a1a1a;
+	padding:12px 0 16px;
+	text-align:center;
+}
+
+#fx-fixtures h2{
+	font-size:18px;
+	margin:4px 0 12px;
+	color:#f5f3ff;
+}
+
+.fx-tabs{
+	display:flex;
+	justify-content:center;
+	gap:8px;
+	margin-bottom:8px;
+}
+
+.fx-tab{
+	background:transparent;
+	color:#c4b5fd;
+	border:1px solid #7c3aed;
+	border-radius:4px;
+	padding:4px 16px;
+	font-size:14px;
+	cursor:pointer;
+}
+
+.fx-tab.fx-active{
+	background:#7c3aed;
+	color:#fff;
+}
+
+#fx-fixtures-status{
+	margin:16px 0;
+	color:#a1a1aa;
+}
+
+.fx-date{
+	font-size:13px;
+	font-weight:600;
+	text-align:left;
+	margin:14px 0 4px;
+	padding:4px 12px;
+	background:#2a2a2a;
+	color:#e9d5ff;
+}
+
+.fx-day{
+	list-style:none;
+	margin:0;
+	padding:0;
+}
+
+.fx-match{
+	display:grid;
+	grid-template-columns:52px 1fr 52px 1fr;
+	align-items:center;
+	column-gap:6px;
+	padding:6px 12px;
+	border-bottom:1px solid #2a2a2a;
+	font-size:14px;
+}
+
+.fx-state{
+	color:#a1a1aa;
+	font-size:12px;
+	text-align:left;
+}
+
+.fx-state.fx-live{
+	color:#34d399;
+	font-weight:600;
+}
+
+.fx-team{
+	display:flex;
+	align-items:center;
+	gap:6px;
+	min-width:0;
+}
+
+.fx-home{ justify-content:flex-end; text-align:right; }
+.fx-away{ justify-content:flex-start; text-align:left; }
+
+.fx-logo{
+	width:20px;
+	height:20px;
+	object-fit:contain;
+	flex:none;
+}
+
+.fx-score{
+	font-weight:700;
+	text-align:center;
+	white-space:nowrap;
+}
+
+#fx-fixtures-more{
+	margin-top:12px;
+	background:transparent;
+	color:#c4b5fd;
+	border:1px solid #7c3aed;
+	border-radius:4px;
+	padding:6px 20px;
+	cursor:pointer;
+}
+
+#fx-fixtures-times{
+	margin:10px 0 0;
+	font-size:12px;
+	color:#71717a;
+}
