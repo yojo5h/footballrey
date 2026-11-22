@@ -4,6 +4,7 @@
 	<title>International | Footballrey.com</title>
 	<link rel="stylesheet" href="/bootstrap.css">
 	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="fixtures.css?v=2">
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -23,8 +24,59 @@
 		</nav>
 		<div class="container">
 			<h1>International</h1>
-			<p class="lead">Coming soon.</p>
+			<nav class="fx-comps" aria-label="Competition">
+				<a class="fx-comp" href="?c=world-cup" data-c="world-cup">World Cup 2026</a>
+				<a class="fx-comp" href="?c=nations-league" data-c="nations-league">Nations League</a>
+			</nav>
+			<div id="wg-api-football-standings"
+			     data-host="v3.football.api-sports.io"
+			     data-league="1"
+			     data-team=""
+			     data-season="2026"
+			     data-key="26c4d56c5c9b4795471cbca950c0e469"
+			     data-theme="dark"
+			     data-show-errors="false"
+			     class="api_football_loader"></div>
+
+			<section id="fx-fixtures" data-league="1" data-season="2026" data-show-round="true">
+				<h2>Matches</h2>
+				<nav class="fx-tabs" role="tablist">
+					<button type="button" class="fx-tab fx-active" data-tab="upcoming" role="tab" aria-selected="true">Upcoming</button>
+					<button type="button" class="fx-tab" data-tab="results" role="tab" aria-selected="false">Results</button>
+				</nav>
+				<p id="fx-fixtures-status"></p>
+				<section id="fx-fixtures-list"></section>
+				<button type="button" id="fx-fixtures-more" hidden>Show more</button>
+				<p id="fx-fixtures-times">Times shown in your local time zone.</p>
+			</section>
 		</div>
 	</div>
+
+	<script>
+		/* Pick the competition from ?c=... (default: World Cup) before the table widget and match list load. */
+		(function () {
+			var competitions = {
+				'world-cup': { league: '1', season: '2026' },
+				'nations-league': { league: '5', season: '2026' }
+			};
+			var params = new URLSearchParams(window.location.search);
+			var key = competitions[params.get('c')] ? params.get('c') : 'world-cup';
+			var comp = competitions[key];
+
+			var widget = document.getElementById('wg-api-football-standings');
+			widget.setAttribute('data-league', comp.league);
+			widget.setAttribute('data-season', comp.season);
+
+			var fixtures = document.getElementById('fx-fixtures');
+			fixtures.setAttribute('data-league', comp.league);
+			fixtures.setAttribute('data-season', comp.season);
+
+			document.querySelectorAll('.fx-comp').forEach(function (a) {
+				a.classList.toggle('fx-active', a.getAttribute('data-c') === key);
+			});
+		})();
+	</script>
+	<script type="module" src="https://widgets.api-sports.io/football/1.1.8/widget.js"></script>
+	<script src="fixtures.js?v=3"></script>
 </body>
 </html>
