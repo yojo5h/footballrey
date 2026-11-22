@@ -8,6 +8,7 @@
   var SEASON = root.getAttribute('data-season');
   var KEY = '26c4d56c5c9b4795471cbca950c0e469';
   var CACHE_KEY = 'fx-fixtures-' + LEAGUE + '-' + SEASON;
+  var SHOW_ROUND = root.getAttribute('data-show-round') === 'true';
   var CACHE_MS = 10 * 60 * 1000;
   var PAGE_SIZE = 30;
 
@@ -76,8 +77,8 @@
     var li = el('li', 'fx-match');
 
     var state;
-    if (FINISHED[short]) state = 'FT';
-    else if (DONE[short]) state = short;
+    if (short === 'FT') state = 'FT';
+    else if (DONE[short]) state = short; // AET, PEN, ABD, CANC...
     else if (LIVE[short]) state = short === 'HT' ? 'HT' : (f.fixture.status.elapsed || '') + "'";
     else if (short === 'NS' || short === 'TBD') state = when.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
     else state = short; // PST, CANC, SUSP, ABD...
@@ -88,9 +89,14 @@
     var score = el('span', 'fx-score');
     if ((FINISHED[short] || LIVE[short]) && f.goals.home !== null && f.goals.away !== null) score.textContent = f.goals.home + ' - ' + f.goals.away;
     else score.textContent = 'vs';
+    var pens = f.score && f.score.penalty;
+    if (short === 'PEN' && pens && pens.home !== null && pens.away !== null) {
+      score.appendChild(el('span', 'fx-pens', '(' + pens.home + '-' + pens.away + ')'));
+    }
     li.appendChild(score);
 
     li.appendChild(team(f.teams.away, 'away'));
+    if (SHOW_ROUND && f.league.round) li.appendChild(el('span', 'fx-round', f.league.round));
     return li;
   }
 
@@ -153,7 +159,8 @@
   load().then(function (data) {
     // Safeguard: only ever show games from this page's league.
     fixtures = data.filter(function (f) { return String(f.league.id) === String(LEAGUE); });
-    select('upcoming');
+    var anyUpcoming = fixtures.some(function (f) { return !DONE[f.fixture.status.short]; });
+    select(anyUpcoming ? 'upcoming' : 'results'); // nothing left to play: open on Results
   }).catch(function () {
     setStatus('Could not load matches right now. Please try again later.');
   });
