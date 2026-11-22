@@ -151,7 +151,8 @@
 
   setStatus('Loading matches…');
   load().then(function (data) {
-    fixtures = data;
+    // Safeguard: only ever show games from this page's league.
+    fixtures = data.filter(function (f) { return String(f.league.id) === String(LEAGUE); });
     select('upcoming');
   }).catch(function () {
     setStatus('Could not load matches right now. Please try again later.');
