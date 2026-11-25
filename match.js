@@ -280,7 +280,7 @@
 
     if (!started) {
       out.push(home.name + ' host ' + away.name + ' in ' + f.league.name +
-        (f.league.round ? ' (' + f.league.round + ')' : '') + '. The recap, lineups and statistics will appear once the match is under way.');
+        (f.league.round ? ' (' + f.league.round + ')' : '') + '. Lineups usually appear shortly before kick-off, and the recap and statistics fill in once the match is under way.');
       return out;
     }
 
@@ -510,7 +510,9 @@
     sec.appendChild(el('h2', null, 'Formations'));
     var lineups = f.lineups || [];
     if (!lineups.length) {
-      sec.appendChild(el('p', 'mr-empty', 'Lineups are not available for this match yet.'));
+      sec.appendChild(el('p', 'mr-empty', NOT_STARTED[f.fixture.status.short]
+        ? 'Lineups usually appear shortly before kick-off.'
+        : 'Lineups are not available for this match yet.'));
       return sec;
     }
     // Home team first.
@@ -529,7 +531,9 @@
     sec.id = 'mr-stats';
     sec.appendChild(el('h2', null, 'Team statistics'));
     if (!hasStats(f)) {
-      sec.appendChild(el('p', 'mr-empty', 'Statistics are not available for this match yet.'));
+      sec.appendChild(el('p', 'mr-empty', NOT_STARTED[f.fixture.status.short]
+        ? 'Statistics appear once the match is under way.'
+        : 'Statistics are not available for this match yet.'));
       return sec;
     }
 
@@ -572,7 +576,9 @@
     var stats = playerStats(f);
     var ids = Object.keys(stats);
     if (!ids.length) {
-      sec.appendChild(el('p', 'mr-empty', 'Player statistics are not available for this match yet.'));
+      sec.appendChild(el('p', 'mr-empty', NOT_STARTED[f.fixture.status.short]
+        ? 'Player ratings appear once the match is under way.'
+        : 'Player statistics are not available for this match yet.'));
       return sec;
     }
     var best = topRated(stats);
