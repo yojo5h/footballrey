@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Champions League | Footballrey.com</title>
+	<link rel="stylesheet" href="/bootstrap.css">
+	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="fixtures.css?v=2">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+	<div class="jumbotron jumbotron-main">
+		<nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+			<div class="container-fluid">
+				<a class="navbar-brand" href="index.html">Footballrey.com</a>
+				<ul class="navbar-nav me-auto mb-2 mb-md-0 flex-row gap-3">
+					<li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+					<li class="nav-item"><a class="nav-link" href="premierleague.html">Premier League</a></li>
+					<li class="nav-item"><a class="nav-link" href="la-liga.html">La Liga</a></li>
+					<li class="nav-item"><a class="nav-link" href="international.html">International</a></li>
+					<li class="nav-item"><a class="nav-link active" href="champions-league.html">Champions League</a></li>
+				</ul>
+			</div>
+		</nav>
+		<div class="container">
+			<h1>Champions League</h1>
+			<div id="wg-api-football-standings"
+			     data-host="v3.football.api-sports.io"
+			     data-league="2"
+			     data-team=""
+			     data-season="2026"
+			     data-key="26c4d56c5c9b4795471cbca950c0e469"
+			     data-theme="dark"
+			     data-show-errors="false"
+			     class="api_football_loader"></div>
+			<script
+			    type="module"
+			    src="https://widgets.api-sports.io/football/1.1.8/widget.js">
+			</script>
+
+			<section id="fx-fixtures" data-league="2" data-season="2026" data-show-round="true">
+				<h2>Matches</h2>
+				<nav class="fx-tabs" role="tablist">
+					<button type="button" class="fx-tab fx-active" data-tab="upcoming" role="tab" aria-selected="true">Upcoming</button>
+					<button type="button" class="fx-tab" data-tab="results" role="tab" aria-selected="false">Results</button>
+				</nav>
+				<p id="fx-fixtures-status"></p>
+				<section id="fx-fixtures-list"></section>
+				<button type="button" id="fx-fixtures-more" hidden>Show more</button>
+				<p id="fx-fixtures-times">Times shown in your local time zone.</p>
+			</section>
+		</div>
+	</div>
+	<script src="fixtures.js?v=3"></script>
+</body>
+</html>
