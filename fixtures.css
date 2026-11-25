@@ -132,6 +132,25 @@
 	color:#a1a1aa;
 }
 
+/* Rows that link to a match report (fixtures.js, data-match-page) */
+.fx-match.fx-has-link{
+	position:relative;
+}
+
+.fx-match.fx-has-link:hover{
+	background:#242424;
+}
+
+.fx-match-link{
+	position:absolute;
+	inset:0;
+}
+
+.fx-match-link:focus-visible{
+	outline:2px solid #a78bfa;
+	outline-offset:-2px;
+}
+
 /* Competition switcher (International page) */
 .fx-comps{
 	display:flex;
