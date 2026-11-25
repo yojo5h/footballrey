@@ -9,6 +9,8 @@
   var KEY = '26c4d56c5c9b4795471cbca950c0e469';
   var CACHE_KEY = 'fx-fixtures-' + LEAGUE + '-' + SEASON;
   var SHOW_ROUND = root.getAttribute('data-show-round') === 'true';
+  // Optional: set data-match-page="match.html" to link matches that have started to their match report.
+  var MATCH_PAGE = root.getAttribute('data-match-page');
   var CACHE_MS = 10 * 60 * 1000;
   var PAGE_SIZE = 30;
 
@@ -97,6 +99,15 @@
 
     li.appendChild(team(f.teams.away, 'away'));
     if (SHOW_ROUND && f.league.round) li.appendChild(el('span', 'fx-round', f.league.round));
+
+    // Stretched link over the whole row, so the grid layout above is untouched.
+    if (MATCH_PAGE && (FINISHED[short] || LIVE[short])) {
+      var link = el('a', 'fx-match-link');
+      link.href = MATCH_PAGE + '?id=' + encodeURIComponent(f.fixture.id);
+      link.setAttribute('aria-label', f.teams.home.name + ' vs ' + f.teams.away.name + ': match report');
+      li.classList.add('fx-has-link');
+      li.appendChild(link);
+    }
     return li;
   }
 
