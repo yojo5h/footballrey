@@ -147,3 +147,8 @@ a:hover{
 .section-a h1{
 	font-size:50px;
 }
+
+/* Let the top nav tabs wrap onto a second line on narrow screens instead of scrolling the page sideways. */
+.navbar-nav.flex-row{
+	flex-wrap: wrap;
+}
